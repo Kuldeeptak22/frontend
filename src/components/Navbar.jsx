@@ -5,8 +5,8 @@ import Logo from "../essets/images/logo/Logo.png";
 import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
-import { NavLink } from "react-router-dom";
-import './Navbar.scss'
+import { NavLink, useNavigate } from "react-router-dom";
+import "./Navbar.scss";
 
 const navigation = [
   { name: "Movies", to: "/movies", current: false },
@@ -61,6 +61,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const searchAnyThing = (e) => {
+    if (e.target.value !== "") {
+      navigate(`/searchPage/${e.target.value}`);
+    } else {
+      navigate("/movies");
+    }
+  };
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -96,7 +104,8 @@ const Navbar = () => {
                         <NavLink
                           key={item.name}
                           to={item.to}
-                          className={classNames("decorationNone",
+                          className={classNames(
+                            "decorationNone",
                             item.current
                               ? "bg-gray-900 text-white"
                               : "text-gray-300 hover:bg-gray-700 hover:text-white",
@@ -117,6 +126,7 @@ const Navbar = () => {
                 <StyledInputBase
                   placeholder="Search…"
                   inputProps={{ "aria-label": "search" }}
+                  onChange={(e) => searchAnyThing(e)}
                 />
               </Search>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -156,7 +166,8 @@ const Navbar = () => {
                         {({ active }) => (
                           <NavLink
                             href="/"
-                            className={classNames( "decorationNone", 
+                            className={classNames(
+                              "decorationNone",
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700 decorationNone"
                             )}
@@ -169,7 +180,8 @@ const Navbar = () => {
                         {({ active }) => (
                           <NavLink
                             href="/"
-                            className={classNames("decorationNone",
+                            className={classNames(
+                              "decorationNone",
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
@@ -182,7 +194,8 @@ const Navbar = () => {
                         {({ active }) => (
                           <NavLink
                             href="/"
-                            className={classNames("decorationNone",
+                            className={classNames(
+                              "decorationNone",
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}

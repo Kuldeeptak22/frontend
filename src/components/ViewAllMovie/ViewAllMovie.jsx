@@ -4,25 +4,32 @@ import { useParams } from "react-router-dom";
 import { BaseURL } from "../../utils/common/APIs";
 import { Col, Container, Row } from "react-bootstrap";
 import MovieCard from "../MovieCard/MovieCard";
-import { Box, CircularProgress } from "@mui/material";
+import SkeletonCard from "../SkeletonCard/SkeletonCard";
 
 const ViewAllMovie = () => {
   const categoryName = useParams();
   const [movie, setMovie] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filteredItems, setFilteredItems] = useState(movie);
-  const fetchMovie = () => {
-    axios
-      .get(`${BaseURL}/movies/get_movies`)
-      .then((res) => setMovie(res.data.data))
-      .catch((error) => {
-        console.log(error);
-      });
+
+  const fetchMovie = async () => {
+    try {
+      const dataResponse = await axios.get(`${BaseURL}/movies/get_movies`);
+      setMovie(dataResponse.data.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   let dataFilter = categoryName.category;
   const filterItems = (dataFilter) => {
     const filtered = movie.filter((item) =>
-      item?.category?.name?.toLowerCase()?.includes(dataFilter?.toLowerCase())
+      dataFilter !== "More Like This"
+        ? item?.category?.name
+            ?.toLowerCase()
+            ?.includes(dataFilter?.toLowerCase())
+        : item
     );
     setFilteredItems(filtered);
   };
@@ -32,28 +39,29 @@ const ViewAllMovie = () => {
     filterItems(dataFilter);
   }, [movie]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Container>
       <Row className="d-flex justify-center align-middle items-center py-5 fs-2 text-white">
-      {categoryName?.category === "More Like This"
+        {categoryName?.category === "More Like This"
           ? categoryName?.category
           : `${categoryName?.category} Movie`}
       </Row>
       <Row className="my-5">
-        {filteredItems.length !== 0 ? (
-          filteredItems &&
+        {isLoading && (
+          <div className="d-flex">
+            <SkeletonCard cards={7} />
+          </div>
+        )}
+        {filteredItems &&
           filteredItems?.map((data) => (
-            <Col sm={3} className="p-4" key={data?._id}>
+            <Col sm={2} className="p-2" key={data?._id}>
               <MovieCard elem={data} />
             </Col>
-          ))
-        ) : (
-          <Box
-            sx={{ display: "flex", justifyContent: "center", padding: "15px" }}
-          >
-            <CircularProgress />
-          </Box>
-        )}
+          ))}
       </Row>
     </Container>
   );
