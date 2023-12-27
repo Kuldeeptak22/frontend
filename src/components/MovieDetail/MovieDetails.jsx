@@ -5,6 +5,7 @@ import { BaseURL } from "../../utils/common/APIs";
 import { useParams } from "react-router-dom";
 import BottomSlider from "../Movies/BottomSlider";
 import ExtraDetails from "./ExtraDetails";
+import { fetchMovies } from "../../utils/common/FetchApi";
 
 const MovieDetails = () => {
   const movie_id = useParams();
@@ -19,19 +20,11 @@ const MovieDetails = () => {
       console.log(error);
     }
   };
-  const fetchMovies = async () => {
-    try {
-      const dataResponse = await axios.get(`${BaseURL}/movies/get_movies`);
-      setMovies(dataResponse?.data?.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-;
+  
   useEffect(() => {
     window.scrollTo(0, 0)
     fetchMovie();
-    fetchMovies();
+    fetchMovies(setMovies);
     
   }, []);
 

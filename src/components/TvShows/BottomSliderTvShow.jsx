@@ -3,37 +3,37 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Container, Row } from "react-bootstrap";
-import "./BottomSlider.scss";
-import MovieCard from "../MovieCard/MovieCard";
+// import "./BottomSlider.scss";
 import SkeletonCard from "../SkeletonCard/SkeletonCard";
-import { fetchMovies } from "../../utils/common/FetchApi";
+import TvShowCard from "./TvShowCard";
+import { fetchTvShows } from "../../utils/common/FetchApi";
 
 
-const BottomSlider = ({ SliderHeadingData }) => {
-  const [movies, setMovies] = useState([]);
+const BottomSliderTvShow = ({ SliderHeadingData }) => {
+  const [shows, setShows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filteredItems, setFilteredItems] = useState(movies);
+//   const [filteredItems, setFilteredItems] = useState(show);
 
-  const filterItems = (SliderHeadingData) => {
-    const filtered = movies.filter((item) =>
-      SliderHeadingData !== "More Like This"
-        ? item?.category?.name
-            ?.toLowerCase()
-            ?.includes(SliderHeadingData?.toLowerCase())
-        : item
-    );
-    setFilteredItems(filtered);
-  };
+//   const filterItems = (SliderHeadingData) => {
+//     const filtered = show.filter((item) =>
+//       SliderHeadingData !== "More Like This"
+//         ? item?.category?.name
+//             ?.toLowerCase()
+//             ?.includes(SliderHeadingData?.toLowerCase())
+//         : item
+//     );
+//     setFilteredItems(filtered);
+//   };
 
   useEffect(() => {
-    fetchMovies(setMovies);
-    filterItems(SliderHeadingData);
-    setIsLoading(false)
-  }, [SliderHeadingData]);
+    fetchTvShows(setShows);
+    setIsLoading(false);
+    // filterItems(SliderHeadingData);
+  }, []);
 
-  const openMovieModal = () => {
-    console.log("dddd");
-  };
+//   const openMovieModal = () => {
+//     console.log("dddd");
+//   };
 
   const settings = {
     // dots: true,
@@ -80,6 +80,7 @@ const BottomSlider = ({ SliderHeadingData }) => {
     ],
   };
 
+
   return (
     <Container
       className="d-flex justify-center flex-col align-middle items-center"
@@ -93,12 +94,12 @@ const BottomSlider = ({ SliderHeadingData }) => {
         )}
 
         <Slider {...settings}>
-          {movies &&
-            movies.map((elem) => (
-              <MovieCard
+          {shows &&
+            shows.map((elem) => (
+              <TvShowCard
                 elem={elem}
                 key={elem._id}
-                onMouseOver={openMovieModal}
+                // onMouseOver={openMovieModal}
               />
             ))}
         </Slider>
@@ -107,4 +108,4 @@ const BottomSlider = ({ SliderHeadingData }) => {
   );
 };
 
-export default BottomSlider;
+export default BottomSliderTvShow;

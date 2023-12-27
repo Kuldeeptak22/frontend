@@ -3,31 +3,35 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BaseURL } from "../../utils/common/APIs";
 
-const MovieFrame = () => {
+const SeasonsFrame = () => {
   const urlData = useParams();
   const [url, setUrl] = useState([]);
-  const fetchMovie = () => {
-    axios
-      .get(`${BaseURL}/movies/get_movie/${urlData.movie_id}`)
-      .then((res) => setUrl(res.data.data))
-      .catch((error) => {
-        console.log(error);
-      });
+
+  const fetchSeason = async () => {
+    try {
+      const dataResponse = await axios.get(
+        `${BaseURL}/seasons/get_season/${urlData?.season_id}`
+      );
+      setUrl(dataResponse?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    fetchMovie();
+    fetchSeason();
   }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   return (
     <div>
       <iframe
         width="100%"
         height="500"
-        src={url.trailorUrl}
+        src={url?.url}
         title="YouTube video player"
         // frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -37,4 +41,4 @@ const MovieFrame = () => {
   );
 };
 
-export default MovieFrame;
+export default SeasonsFrame;

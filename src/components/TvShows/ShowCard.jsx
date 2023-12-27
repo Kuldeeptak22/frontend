@@ -5,18 +5,18 @@ import React from "react";
 import { BaseURL } from "../../utils/common/APIs";
 import { useNavigate } from "react-router-dom";
 
-const MovieCard = ({ elem }) => {
+const ShowCard = ({ elem }) => {
   const navigate = useNavigate();
 
-  const goToMovieDetailsPage = (id) => {
-    navigate(`/movies/movieDetails/${id}`);
+  const goToShowDetailsPage = (id) => {
+    navigate(`/tvShows/tvShowDetails/${id}`);
   };
   return (
     <>
       <Card
         sx={{ maxWidth: 400 }}
         key={elem?.title}
-        onClick={() => goToMovieDetailsPage(elem?._id)}
+        onClick={() => goToShowDetailsPage(elem?._id)}
       >
         <CardActionArea>
           <CardMedia
@@ -24,7 +24,7 @@ const MovieCard = ({ elem }) => {
             component="img"
             height="100%"
             width="100px"
-            image={`${BaseURL}/uploads/movies/${elem?.thumbnail}`}
+            image={`${BaseURL}/uploads/tvShows/${elem?.thumbnail}`}
             alt="green iguana"
           />
         </CardActionArea>
@@ -33,4 +33,4 @@ const MovieCard = ({ elem }) => {
   );
 };
 
-export default MovieCard;
+export default ShowCard;

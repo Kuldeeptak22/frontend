@@ -15,6 +15,10 @@ import SearchPage from "./pages/SearchPage";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./App.scss";
+import TvShowDetails from "./components/TvShows/TvShowDetails";
+import TvShowFrame from "./components/TvShows/TvShowFrame";
+import ViewAllShow from "./components/TvShows/ViewAllShow";
+import SeasonsFrame from "./components/TvShows/SeasonsFrame";
 
 function App() {
   return (
@@ -43,6 +47,23 @@ function App() {
               path="/movies/viewAllMovies/:category"
               element={<ViewAllMovie />}
             />
+             <Route
+              path="/tvShows/tvShowDetails/:tvShow_id"
+              element={<TvShowDetails />}
+            />
+            <Route
+              path="/tvShows/tvShowFrame/:tvShow_id"
+              element={<TvShowFrame />}
+            />
+             <Route
+              path="/tvShows/viewAllShows/:category"
+              element={<ViewAllShow />}
+            />
+            <Route
+              path="/seasons/seasonsFrame/:season_id"
+              element={<SeasonsFrame />}
+            />
+            
           </Routes>
           <Footer />
         </Router>

@@ -3,14 +3,13 @@ import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import axios from "axios";
-import { BaseURL } from "../../utils/common/APIs";
 import "./SliderMovie.scss";
 import MovieDetail from "../MovieDetail/MovieDetail";
+import { fetchMovies } from "../../utils/common/FetchApi";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const SliderMovie = () => {
-  const [movie, setMovie] = useState([]);
+  const [movies, setMovies] = useState([]);
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -18,17 +17,8 @@ const SliderMovie = () => {
     setActiveStep(step);
   };
 
-  const fetchMovie = () => {
-    axios
-      .get(`${BaseURL}/movies/get_movies`)
-      .then((res) => setMovie(res.data.data))
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
-    fetchMovie();
+    fetchMovies(setMovies);
   }, []);
 
   return (
@@ -39,8 +29,8 @@ const SliderMovie = () => {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {movie &&
-          movie.slice(0).map((step) => (
+        {movies &&
+          movies.slice(0).map((step) => (
             <MovieDetail data={step} key={step.title}/>
           ))}
       </AutoPlaySwipeableViews>
