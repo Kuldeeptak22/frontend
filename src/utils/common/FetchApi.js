@@ -30,19 +30,50 @@ export const fetchMovies = async (setMovies) => {
     console.log(error);
   }
 };
-export const fetchMovie = async (setMovie,movie_id) => {
+export const fetchMovie = async (setMovie, movie_id) => {
   try {
-    const dataResponse = await axios.get(`${BaseURL}/movies/get_movie/${movie_id?.movie_id}`);
+    const dataResponse = await axios.get(
+      `${BaseURL}/movies/get_movie/${movie_id?.movie_id}`
+    );
     setMovie(dataResponse.data.data);
   } catch (error) {
     console.log(error);
   }
 };
 export const fetchTvShows = async (setShows) => {
-    try {
-      const dataResponse = await axios.get(`${BaseURL}/tvShows/get_tvShows`);
-      setShows(dataResponse.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  try {
+    const dataResponse = await axios.get(`${BaseURL}/tvShows/get_tvShows`);
+    setShows(dataResponse.data.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const fetchSeasons = async (setSeasons) => {
+  try {
+    const dataResponse = await axios.get(`${BaseURL}/seasons/get_seasons`);
+    setSeasons(dataResponse.data.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const fetchSeasonsByTvShow = async (setSeasons, tvShow_id) => {
+  try {
+    const dataResponse = await axios.get(
+      `${BaseURL}/seasons/get_seasonByTvShow/${tvShow_id.tvShow_id}`
+    );
+    setSeasons(dataResponse.data.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const fetchDataTvShow = async (setShows, data) => {
+  try {
+    const encodedSearchQuery = encodeURIComponent(data.data);
+    const dataResponse = await axios.get(
+      `${BaseURL}/tvShows/get_tvShows?search=${encodedSearchQuery}`
+    );
+    setShows(dataResponse.data.data);
+  } catch (error) {
+    console.log(error);
+  }
+};

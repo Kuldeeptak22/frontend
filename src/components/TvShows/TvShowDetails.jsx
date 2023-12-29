@@ -4,14 +4,15 @@ import { BaseURL } from "../../utils/common/APIs";
 import { useParams } from "react-router-dom";
 import TvShowDetail from "./TvShowDetail";
 import ExtraTvShowDetails from "./ExtraTvShowDetails";
-import { fetchTvShows } from "../../utils/common/FetchApi";
+import { fetchSeasonsByTvShow } from "../../utils/common/FetchApi";
+import { Container, Row } from "react-bootstrap";
 // import BottomSlider from "../Movies/BottomSlider";
 // import ExtraDetails from "./ExtraDetails";
 
 const TvShowDetails = () => {
   const tvShow_id = useParams();
   const [show, setShow] = useState({});
-  const [shows, setShows] = useState([]);
+  const [seasons, setSeasons] = useState([]);
 
   const fetchTvShow = async () => {
     try {
@@ -27,13 +28,22 @@ const TvShowDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchTvShow();
-    fetchTvShows(setShows);
+    fetchSeasonsByTvShow(setSeasons, tvShow_id);
   }, []);
 
   return (
     <>
       <TvShowDetail data={show} />
-      <ExtraTvShowDetails data={show} />
+      <Container>
+        <Row className="text-white">
+          <p className="py-2 fw-bold fs-5">Episodes</p>
+          <hr />
+          <p className="py-2 fw-bold fs-6">Season 1</p>
+        </Row>
+      </Container>
+
+      {seasons && seasons.map((season) => <ExtraTvShowDetails data={season} />)}
+
       {/* <ExtraDetails data={movie}/>
       <BottomSlider movie={movies} />  */}
     </>

@@ -8,22 +8,21 @@ import SkeletonCard from "../SkeletonCard/SkeletonCard";
 import TvShowCard from "./TvShowCard";
 import { fetchTvShows } from "../../utils/common/FetchApi";
 
-
 const BottomSliderTvShow = ({ SliderHeadingData }) => {
   const [shows, setShows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-//   const [filteredItems, setFilteredItems] = useState(show);
+  //   const [filteredItems, setFilteredItems] = useState(show);
 
-//   const filterItems = (SliderHeadingData) => {
-//     const filtered = show.filter((item) =>
-//       SliderHeadingData !== "More Like This"
-//         ? item?.category?.name
-//             ?.toLowerCase()
-//             ?.includes(SliderHeadingData?.toLowerCase())
-//         : item
-//     );
-//     setFilteredItems(filtered);
-//   };
+  //   const filterItems = (SliderHeadingData) => {
+  //     const filtered = show.filter((item) =>
+  //       SliderHeadingData !== "More Like This"
+  //         ? item?.category?.name
+  //             ?.toLowerCase()
+  //             ?.includes(SliderHeadingData?.toLowerCase())
+  //         : item
+  //     );
+  //     setFilteredItems(filtered);
+  //   };
 
   useEffect(() => {
     fetchTvShows(setShows);
@@ -31,9 +30,9 @@ const BottomSliderTvShow = ({ SliderHeadingData }) => {
     // filterItems(SliderHeadingData);
   }, []);
 
-//   const openMovieModal = () => {
-//     console.log("dddd");
-//   };
+  //   const openMovieModal = () => {
+  //     console.log("dddd");
+  //   };
 
   const settings = {
     // dots: true,
@@ -79,7 +78,6 @@ const BottomSliderTvShow = ({ SliderHeadingData }) => {
       },
     ],
   };
-
 
   return (
     <Container

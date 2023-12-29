@@ -13,6 +13,10 @@ const navigation = [
   { name: "TV Show", to: "tvShows", current: false },
   { name: "Blog", to: "blogs", current: false },
 ];
+const userNavigation = [
+  { name: "My Profile", to: "/myProfile", current: false },
+  { name: "Sign Out", to: "/", current: false },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -130,14 +134,6 @@ const Navbar = () => {
                 />
               </Search>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -162,48 +158,23 @@ const Navbar = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <NavLink
-                            href="/"
-                            className={classNames(
-                              "decorationNone",
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700 decorationNone"
+                      {userNavigation &&
+                        userNavigation.map((item) => (
+                          <Menu.Item>
+                            {({ active }) => (
+                              <NavLink
+                                to={item.to}
+                                className={classNames(
+                                  "decorationNone",
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700 decorationNone"
+                                )}
+                              >
+                               {item.name}
+                              </NavLink>
                             )}
-                          >
-                            Your Profile
-                          </NavLink>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <NavLink
-                            href="/"
-                            className={classNames(
-                              "decorationNone",
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Settings
-                          </NavLink>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <NavLink
-                            href="/"
-                            className={classNames(
-                              "decorationNone",
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign out
-                          </NavLink>
-                        )}
-                      </Menu.Item>
+                          </Menu.Item>
+                        ))}
                     </Menu.Items>
                   </Transition>
                 </Menu>

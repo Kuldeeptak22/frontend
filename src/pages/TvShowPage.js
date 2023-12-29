@@ -1,7 +1,7 @@
-import React from "react";
 import { Container, Row } from "react-bootstrap";
 import BottomSliderTvShow from "../components/TvShows/BottomSliderTvShow";
 import SliderHeadingShow from "../components/TvShows/SliderHeadingShow";
+import SliderTvShow from "../components/TvShows/SliderTvShow";
 
 const TvShowPage = () => {
   const SliderHeadingData = {
@@ -11,10 +11,11 @@ const TvShowPage = () => {
   return (
     <Container fluid className="p-0">
       <Row className="g-0">
+        <SliderTvShow />
         <SliderHeadingShow SliderHeadingData={SliderHeadingData.title1} />
         <BottomSliderTvShow SliderHeadingData={SliderHeadingData.title1} />
-        <SliderHeadingShow SliderHeadingData={SliderHeadingData.title2} />
-        <BottomSliderTvShow SliderHeadingData={SliderHeadingData.title2} />
+        {/* <SliderHeadingShow SliderHeadingData={SliderHeadingData.title2} />
+        <BottomSliderTvShow SliderHeadingData={SliderHeadingData.title2} /> */}
       </Row>
     </Container>
   );

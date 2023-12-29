@@ -25,7 +25,7 @@ const MovieCard = ({ elem }) => {
             height="100%"
             width="100px"
             image={`${BaseURL}/uploads/movies/${elem?.thumbnail}`}
-            alt="green iguana"
+            alt={elem?.title}
           />
         </CardActionArea>
       </Card>
