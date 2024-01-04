@@ -20,7 +20,7 @@ const TvCard = ({ elem }) => {
       >
         <CardActionArea>
           <CardMedia
-            style={{ maxHeight: 280 }}
+            style={{ maxHeight: 220 }}
             component="img"
             height="100%"
             width="100px"

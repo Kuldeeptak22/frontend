@@ -6,34 +6,34 @@ import { Container, Row } from "react-bootstrap";
 import "./BottomSlider.scss";
 import MovieCard from "../MovieCard/MovieCard";
 import SkeletonCard from "../SkeletonCard/SkeletonCard";
-import { fetchMovies } from "../../utils/common/FetchApi";
-
+import { fetchMoviebyCategory, fetchMovies } from "../../utils/common/FetchApi";
 
 const BottomSlider = ({ SliderHeadingData }) => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filteredItems, setFilteredItems] = useState(movies);
 
-  const filterItems = (SliderHeadingData) => {
-    const filtered = movies.filter((item) =>
-      SliderHeadingData !== "More Like This"
-        ? item?.category?.name
-            ?.toLowerCase()
-            ?.includes(SliderHeadingData?.toLowerCase())
-        : item
-    );
-    setFilteredItems(filtered);
-  };
+  // const filterItems = (SliderHeadingData) => {
+  //   const filtered = movies.filter((item) =>
+  //     SliderHeadingData !== "More Like This"
+  //       ? item?.category?.name
+  //           ?.toLowerCase()
+  //           ?.includes(SliderHeadingData?.toLowerCase())
+  //       : item
+  //   );
+  //   setFilteredItems(filtered);
+  // };
 
   useEffect(() => {
     fetchMovies(setMovies);
-    filterItems(SliderHeadingData);
-    setIsLoading(false)
+    // fetchMoviebyCategory(setMovies, SliderHeadingData);
+    // filterItems(SliderHeadingData);
+    setIsLoading(false);
   }, [SliderHeadingData]);
 
-  const openMovieModal = () => {
-    console.log("dddd");
-  };
+  // const openMovieModal = () => {
+  //   console.log("dddd");
+  // };
 
   const settings = {
     // dots: true,
@@ -98,7 +98,7 @@ const BottomSlider = ({ SliderHeadingData }) => {
               <MovieCard
                 elem={elem}
                 key={elem._id}
-                onMouseOver={openMovieModal}
+                // onMouseOver={openMovieModal}
               />
             ))}
         </Slider>

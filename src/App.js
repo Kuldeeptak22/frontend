@@ -1,5 +1,10 @@
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import TvShowPage from "./pages/TvShowPage";
 import MoviesPage from "./pages/MoviesPage";
 import BlogsPage from "./pages/BlogsPage";
@@ -19,8 +24,14 @@ import TvShowDetails from "./components/TvShows/TvShowDetails";
 import TvShowFrame from "./components/TvShows/TvShowFrame";
 import ViewAllShow from "./components/TvShows/ViewAllShow";
 import SeasonsFrame from "./components/TvShows/SeasonsFrame";
+import MyProfile from "./pages/MyProfile";
+import BlogDetail from "./components/Blog/BlogDetail";
+import SignUpPage from "./pages/SignUpPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
+  const token = localStorage.getItem("UserToken");
+  const user = JSON.parse(localStorage.getItem("User"));
   return (
     <div className="App">
       <SkeletonTheme baseColor="#313131" highlightColor="#525252">
@@ -28,42 +39,58 @@ function App() {
           <Navbar />
           {/* <NavDrawer/> */}
           <Routes>
+            <Route path="/" element={<MoviesPage />} />
             <Route path="/movies" element={<MoviesPage />} />
             <Route path="/tvShows" element={<TvShowPage />} />
+            <Route
+              path="/myProfile"
+              element={user ? <MyProfile user={user} /> : <Navigate to="/login" />}
+            />
             <Route path="/blogs" element={<BlogsPage />} />
             <Route path="/searchPage/:data" element={<SearchPage />} />
             <Route path="/aboutus" element={<AboutUsPage />} />
             <Route path="/termsOfUse" element={<TermsOfUse />} />
             <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
             <Route
+              path="/signUp"
+              element={token ? <Navigate to="/" /> : <SignUpPage />}
+            />
+            <Route
+              path="/login"
+              element={token ? <Navigate to="/" /> : <LoginPage />}
+            />
+            <Route
               path="/movies/movieDetails/:movie_id"
               element={<MovieDetails />}
             />
             <Route
               path="/movies/movieFrame/:movie_id"
-              element={<MovieFrame />}
+              element={token ? <MovieFrame /> : <Navigate to="/login" />}
             />
             <Route
               path="/movies/viewAllMovies/:category"
               element={<ViewAllMovie />}
             />
-             <Route
+            <Route
               path="/tvShows/tvShowDetails/:tvShow_id"
               element={<TvShowDetails />}
             />
             <Route
               path="/tvShows/tvShowFrame/:tvShow_id"
-              element={<TvShowFrame />}
+              element={token ? <TvShowFrame /> : <Navigate to="/login" />}
             />
-             <Route
+            <Route
               path="/tvShows/viewAllShows/:category"
               element={<ViewAllShow />}
             />
             <Route
               path="/seasons/seasonsFrame/:season_id"
-              element={<SeasonsFrame />}
+              element={token ? <SeasonsFrame /> : <Navigate to="/login" />}
             />
-            
+            <Route
+              path="/blogs/blogDetails/:blog_id"
+              element={<BlogDetail />}
+            />
           </Routes>
           <Footer />
         </Router>

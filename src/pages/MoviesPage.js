@@ -6,10 +6,10 @@ import SliderHeading from "../components/SliderHeading/SliderHeading";
 
 const SliderHeadingData = {
   title1: "More Like This",
-  title2: "Horror",
+  title2: "Action",
   title3: "Drama",
-  title4: "Action",
-  title5: "Comedy",
+  title4: "Comedy",
+  title5: "Horror",
   title6: "Romantic ",
 };
 

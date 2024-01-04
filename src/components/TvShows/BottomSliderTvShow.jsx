@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Container, Row } from "react-bootstrap";
-// import "./BottomSlider.scss";
+// import "./BottomSliderTvShow.scss";
 import SkeletonCard from "../SkeletonCard/SkeletonCard";
 import TvShowCard from "./TvShowCard";
 import { fetchTvShows } from "../../utils/common/FetchApi";
@@ -33,7 +33,6 @@ const BottomSliderTvShow = ({ SliderHeadingData }) => {
   //   const openMovieModal = () => {
   //     console.log("dddd");
   //   };
-
   const settings = {
     // dots: true,
     infinite: true,

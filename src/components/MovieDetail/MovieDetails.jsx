@@ -3,14 +3,11 @@ import MovieDetail from "./MovieDetail";
 import axios from "axios";
 import { BaseURL } from "../../utils/common/APIs";
 import { useParams } from "react-router-dom";
-import BottomSlider from "../Movies/BottomSlider";
 import ExtraDetails from "./ExtraDetails";
-import { fetchMovies } from "../../utils/common/FetchApi";
 
 const MovieDetails = () => {
   const movie_id = useParams();
   const [movie, setMovie] = useState([]);
-  const [movies, setMovies] = useState([]);
  
   const fetchMovie = async () => {
     try {
@@ -24,15 +21,12 @@ const MovieDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
     fetchMovie();
-    fetchMovies(setMovies);
-    
   }, []);
 
   return (
     <>
       <MovieDetail data={movie} />
       <ExtraDetails data={movie}/>
-      <BottomSlider movie={movies} />
     </>
   );
 };

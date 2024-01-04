@@ -12,12 +12,12 @@ export const fetchData = async (setMovie, data) => {
     console.log(error);
   }
 };
-export const fetchMoviebyCategory = async (setMovie, data) => {
+export const fetchMoviebyCategory = async (setMovies, data) => {
   try {
     const dataResponse = await axios.get(
       `${BaseURL}/movies/get_movies?category=${data}`
     );
-    setMovie(dataResponse.data.data);
+    setMovies(dataResponse.data.data);
   } catch (error) {
     console.log(error);
   }
@@ -73,6 +73,14 @@ export const fetchDataTvShow = async (setShows, data) => {
       `${BaseURL}/tvShows/get_tvShows?search=${encodedSearchQuery}`
     );
     setShows(dataResponse.data.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const fetchBlogs = async (setBlogs) => {
+  try {
+    const dataResponse = await axios.get(`${BaseURL}/blogs/get_blogs`);
+    setBlogs(dataResponse.data.data);
   } catch (error) {
     console.log(error);
   }

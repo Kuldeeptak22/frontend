@@ -7,6 +7,10 @@ import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
+import { toast } from "react-toastify";
+import { BaseURL } from "../utils/common/APIs";
+import { Avatar } from "@mui/material";
+import { deepPurple } from "@mui/material/colors";
 
 const navigation = [
   { name: "Movies", to: "/movies", current: false },
@@ -15,7 +19,6 @@ const navigation = [
 ];
 const userNavigation = [
   { name: "My Profile", to: "/myProfile", current: false },
-  { name: "Sign Out", to: "/", current: false },
 ];
 
 function classNames(...classes) {
@@ -65,12 +68,29 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const user = JSON.parse(localStorage.getItem("User"));
   const navigate = useNavigate();
   const searchAnyThing = (e) => {
     if (e.target.value !== "") {
       navigate(`/searchPage/${e.target.value}`);
     } else {
       navigate("/movies");
+    }
+  };
+
+  const signOutFunc = () => {
+    const token = localStorage.getItem("UserToken");
+    if (token) {
+      localStorage.removeItem("UserToken");
+      localStorage.removeItem("User");
+      const notify = () =>
+        toast.success("Logout Successfully...!!", {
+          theme: "dark",
+        });
+      notify();
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
     }
   };
   return (
@@ -134,18 +154,25 @@ const Navbar = () => {
                 />
               </Search>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
+                      {user?.avatar ? (
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={`${BaseURL}/uploads/users/${user?.avatar}`}
+                          alt={user?.firstName}
+                        />
+                      ) : (
+                        <Avatar
+                          alt={user?.firstName}
+                          sx={{ bgcolor: deepPurple[500] }}
+                          src="/static/images/avatar/1.jpg"
+                        ></Avatar>
+                      )}
                     </Menu.Button>
                   </div>
                   <Transition
@@ -170,11 +197,25 @@ const Navbar = () => {
                                   "block px-4 py-2 text-sm text-gray-700 decorationNone"
                                 )}
                               >
-                               {item.name}
+                                {item.name}
                               </NavLink>
                             )}
                           </Menu.Item>
                         ))}
+                      <Menu.Item>
+                        {({ active }) => (
+                          <NavLink
+                            className={classNames(
+                              "decorationNone",
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700 decorationNone"
+                            )}
+                            onClick={signOutFunc}
+                          >
+                            Sign Out
+                          </NavLink>
+                        )}
+                      </Menu.Item>
                     </Menu.Items>
                   </Transition>
                 </Menu>
