@@ -45,7 +45,6 @@ function App() {
     <div className="App">
       <Router>
         <Navbar setUser={setUser} setToken={setToken} />
-        {/* <NavDrawer/> */}
         <Routes>
           <Route path="/" element={<MoviesPage />} />
           <Route path="/movies" element={<MoviesPage />} />
