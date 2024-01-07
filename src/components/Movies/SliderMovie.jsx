@@ -30,9 +30,7 @@ const SliderMovie = () => {
         enableMouseEvents
       >
         {movies &&
-          movies.slice(0).map((step) => (
-            <MovieDetail data={step} key={step.title}/>
-          ))}
+          movies.map((step) => <MovieDetail data={step} key={step.title} />)}
       </AutoPlaySwipeableViews>
     </Box>
   );

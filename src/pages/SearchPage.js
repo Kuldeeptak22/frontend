@@ -1,11 +1,10 @@
-import { Container } from "@mui/material";
+import { Container, Skeleton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard/MovieCard";
 import TvShowCard from "../components/TvShows/TvShowCard";
 import { fetchData, fetchDataTvShow } from "../utils/common/FetchApi";
-import SkeletonCard from "../components/SkeletonCard/SkeletonCard";
 
 const SearchPage = () => {
   const data = useParams();
@@ -19,17 +18,17 @@ const SearchPage = () => {
     setIsLoading(false);
   }, []);
 
-  let mixedArray = [];
-  mixedArray = [...movie, ...shows];
-  console.log("ll", mixedArray.length);
   return (
     <Container>
       <Row>
         <p className="fs-2 text-white pt-5 pb-3">Result</p>
         {isLoading && (
           <div className="d-flex">
-            <SkeletonCard
-              cards={7}
+            <Skeleton
+              variant="rectangle"
+              animation="wave"
+              height={220}
+              width={400}
             />
           </div>
         )}
@@ -51,10 +50,3 @@ const SearchPage = () => {
 };
 
 export default SearchPage;
-
-// let data = [];
-// let vari1 = "jj";
-// let vari2 = "hh";
-// data = [...vari1, ...vari2];
-
-// console.log(data);

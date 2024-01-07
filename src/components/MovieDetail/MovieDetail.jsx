@@ -1,7 +1,6 @@
 import React from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import { BaseURL } from "../../utils/common/APIs";
 import "./MovieDetail.scss";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +11,7 @@ const MovieDetail = ({ data }) => {
   const goToMovieFrame = (id) => {
     navigate(`/movies/movieFrame/${id}`);
   };
+
   return (
     <div
       key={data?.title}
@@ -22,6 +22,7 @@ const MovieDetail = ({ data }) => {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         height: 600,
+        padding: "0 8px",
       }}
     >
       <div className="d-flex flex-col justify-end pb-24 items-center sm:items-start  h-100 sm:px-36 text-white">
@@ -50,7 +51,9 @@ const MovieDetail = ({ data }) => {
           </div>
           <div className="px-1">{data?.language}</div>
         </div>
-        <div className="fs-6 my-2 text-center">{data?.shortDescription}</div>
+        <div className="fs-6 my-3 text-lg-left lg:mr-96 ">
+          {data?.shortDescription}
+        </div>
         <div className="fs-6 font-medium my-2 d-flex">
           <div className="pr-2">{data?.category?.name}</div>
           <div className="text-slate-400">|</div>
@@ -80,15 +83,6 @@ const MovieDetail = ({ data }) => {
             onClick={() => goToMovieFrame(data?._id)}
           >
             Watch Now
-          </Button>
-
-          <Button
-            color="primary"
-            variant="outlined"
-            aria-label="add"
-            className="mx-2 py-2 py-sm-3 my-4 my-sm-0 border-white text-white"
-          >
-            <AddIcon />
           </Button>
         </div>
       </div>

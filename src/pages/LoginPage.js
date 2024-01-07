@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import LoginForm from "../components/Auth/LoginForm";
 import { NavLink } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({ setUser, setToken }) => {
   return (
     <Container fluid>
       <Row className="sm:px-5 py-3 mx-1">
@@ -17,7 +17,7 @@ const LoginPage = () => {
               </p>
             </div>
           </div>
-          <LoginForm />
+          <LoginForm setUser={setUser} setToken={setToken} />
           <div className="my-2 sm:flex justify-between align-middle items-center">
             <div className="text-white">Don’t have an account?</div>
             <Button className="text-yellow-200 my-2">

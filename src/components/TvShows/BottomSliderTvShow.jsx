@@ -3,36 +3,19 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Container, Row } from "react-bootstrap";
-// import "./BottomSliderTvShow.scss";
-import SkeletonCard from "../SkeletonCard/SkeletonCard";
 import TvShowCard from "./TvShowCard";
 import { fetchTvShows } from "../../utils/common/FetchApi";
+import { Skeleton } from "@mui/material";
 
-const BottomSliderTvShow = ({ SliderHeadingData }) => {
+const BottomSliderTvShow = () => {
   const [shows, setShows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  //   const [filteredItems, setFilteredItems] = useState(show);
-
-  //   const filterItems = (SliderHeadingData) => {
-  //     const filtered = show.filter((item) =>
-  //       SliderHeadingData !== "More Like This"
-  //         ? item?.category?.name
-  //             ?.toLowerCase()
-  //             ?.includes(SliderHeadingData?.toLowerCase())
-  //         : item
-  //     );
-  //     setFilteredItems(filtered);
-  //   };
 
   useEffect(() => {
     fetchTvShows(setShows);
     setIsLoading(false);
-    // filterItems(SliderHeadingData);
   }, []);
 
-  //   const openMovieModal = () => {
-  //     console.log("dddd");
-  //   };
   const settings = {
     // dots: true,
     infinite: true,
@@ -86,19 +69,18 @@ const BottomSliderTvShow = ({ SliderHeadingData }) => {
       <Row className="w-[97%]">
         {isLoading && (
           <div className="d-flex">
-            <SkeletonCard cards={7} />
+            <Skeleton
+              variant="rectangle"
+              animation="wave"
+              height={220}
+              width={400}
+            />
           </div>
         )}
 
         <Slider {...settings}>
           {shows &&
-            shows.map((elem) => (
-              <TvShowCard
-                elem={elem}
-                key={elem._id}
-                // onMouseOver={openMovieModal}
-              />
-            ))}
+            shows.map((elem) => <TvShowCard elem={elem} key={elem._id} />)}
         </Slider>
       </Row>
     </Container>

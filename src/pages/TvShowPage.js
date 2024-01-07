@@ -14,8 +14,6 @@ const TvShowPage = () => {
         <SliderTvShow />
         <SliderHeadingShow SliderHeadingData={SliderHeadingData.title1} />
         <BottomSliderTvShow SliderHeadingData={SliderHeadingData.title1} />
-        {/* <SliderHeadingShow SliderHeadingData={SliderHeadingData.title2} />
-        <BottomSliderTvShow SliderHeadingData={SliderHeadingData.title2} /> */}
       </Row>
     </Container>
   );

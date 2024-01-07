@@ -5,38 +5,16 @@ import "slick-carousel/slick/slick-theme.css";
 import { Container, Row } from "react-bootstrap";
 import "./BottomSlider.scss";
 import MovieCard from "../MovieCard/MovieCard";
-import SkeletonCard from "../SkeletonCard/SkeletonCard";
-import { fetchMoviebyCategory, fetchMovies } from "../../utils/common/FetchApi";
+import { fetchMovies } from "../../utils/common/FetchApi";
 
 const BottomSlider = ({ SliderHeadingData }) => {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [filteredItems, setFilteredItems] = useState(movies);
-
-  // const filterItems = (SliderHeadingData) => {
-  //   const filtered = movies.filter((item) =>
-  //     SliderHeadingData !== "More Like This"
-  //       ? item?.category?.name
-  //           ?.toLowerCase()
-  //           ?.includes(SliderHeadingData?.toLowerCase())
-  //       : item
-  //   );
-  //   setFilteredItems(filtered);
-  // };
 
   useEffect(() => {
     fetchMovies(setMovies);
-    // fetchMoviebyCategory(setMovies, SliderHeadingData);
-    // filterItems(SliderHeadingData);
-    setIsLoading(false);
   }, [SliderHeadingData]);
 
-  // const openMovieModal = () => {
-  //   console.log("dddd");
-  // };
-
   const settings = {
-    // dots: true,
     infinite: true,
     speed: 700,
     slidesToShow: 7,
@@ -86,21 +64,27 @@ const BottomSlider = ({ SliderHeadingData }) => {
       style={{ padding: "0 28px" }}
     >
       <Row className="w-[97%]">
-        {isLoading && (
-          <div className="d-flex">
-            <SkeletonCard cards={7} />
-          </div>
+        {SliderHeadingData === "More Like This" && (
+          <Slider {...settings}>
+            {movies?.length &&
+              movies.map((elem) => (
+                <MovieCard
+                  elem={elem}
+                  key={elem._id}
+                  // onMouseOver={openMovieModal}
+                />
+              ))}
+          </Slider>
         )}
-
         <Slider {...settings}>
-          {movies &&
-            movies.map((elem) => (
-              <MovieCard
-                elem={elem}
-                key={elem._id}
-                // onMouseOver={openMovieModal}
-              />
-            ))}
+          {movies?.length &&
+            movies
+              .filter(
+                (a) =>
+                  a.category.name.toLowerCase() ===
+                  SliderHeadingData.toLowerCase()
+              )
+              .map((elem) => <MovieCard elem={elem} key={elem._id} />)}
         </Slider>
       </Row>
     </Container>

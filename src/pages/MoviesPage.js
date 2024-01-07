@@ -6,11 +6,11 @@ import SliderHeading from "../components/SliderHeading/SliderHeading";
 
 const SliderHeadingData = {
   title1: "More Like This",
-  title2: "Action",
+  title2: "Comedy",
   title3: "Drama",
-  title4: "Comedy",
+  title4: "Action",
   title5: "Horror",
-  title6: "Romantic ",
+  title6: "Romantic",
 };
 
 const MoviesPage = () => {
@@ -19,7 +19,7 @@ const MoviesPage = () => {
       <Row className="g-0">
         <SliderMovie />
         <SliderHeading SliderHeadingData={SliderHeadingData.title1} />
-        <BottomSlider  SliderHeadingData={SliderHeadingData.title1}/>
+        <BottomSlider SliderHeadingData={SliderHeadingData.title1} />
         <SliderHeading SliderHeadingData={SliderHeadingData.title2} />
         <BottomSlider SliderHeadingData={SliderHeadingData.title2} />
         <SliderHeading SliderHeadingData={SliderHeadingData.title3} />

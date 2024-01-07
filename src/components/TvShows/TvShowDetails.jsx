@@ -42,7 +42,10 @@ const TvShowDetails = () => {
         </Row>
       </Container>
 
-      {seasons && seasons.map((season) => <ExtraTvShowDetails data={season} />)}
+      {seasons &&
+        seasons.map((season) => (
+          <ExtraTvShowDetails data={season} key={season._Id} />
+        ))}
 
       {/* <ExtraDetails data={movie}/>
       <BottomSlider movie={movies} />  */}

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import MovieCard from "../MovieCard/MovieCard";
-import SkeletonCard from "../SkeletonCard/SkeletonCard";
 import { fetchMovies } from "../../utils/common/FetchApi";
+import { Skeleton } from "@mui/material";
 
 const ViewAllMovie = () => {
   const categoryName = useParams();
@@ -43,7 +43,12 @@ const ViewAllMovie = () => {
       <Row className="my-5">
         {isLoading && (
           <div className="d-flex">
-            <SkeletonCard cards={7} />
+            <Skeleton
+              variant="rectangle"
+              animation="wave"
+              height={220}
+              width={400}
+            />
           </div>
         )}
         {filteredItems &&

@@ -1,12 +1,22 @@
-import { Card } from "@mui/material";
+import { Card, Skeleton } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BaseURL } from "../../utils/common/APIs";
 import { useNavigate } from "react-router-dom";
 
 const ShowCard = ({ elem }) => {
   const navigate = useNavigate();
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  const cardDetails = () => {
+    setData(elem);
+    setIsLoading(false);
+  };
+  useEffect(() => {
+    cardDetails();
+  }, []);
 
   const goToShowDetailsPage = (id) => {
     navigate(`/tvShows/tvShowDetails/${id}`);
@@ -15,18 +25,27 @@ const ShowCard = ({ elem }) => {
     <>
       <Card
         sx={{ maxWidth: 400 }}
-        key={elem?.title}
-        onClick={() => goToShowDetailsPage(elem?._id)}
+        key={data?.title}
+        onClick={() => goToShowDetailsPage(data?._id)}
       >
         <CardActionArea>
-          <CardMedia
-            style={{ maxHeight: 400 }}
-            component="img"
-            height="100%"
-            width="100px"
-            image={`${BaseURL}/uploads/tvShows/${elem?.thumbnail}`}
-            alt="green iguana"
-          />
+          {isLoading ? (
+            <Skeleton
+              variant="rectangle"
+              animation="wave"
+              height={220}
+              width={400}
+            />
+          ) : (
+            <CardMedia
+              style={{ maxHeight: 400 }}
+              component="img"
+              height="100%"
+              width="100px"
+              image={`${BaseURL}/uploads/tvShows/${data?.thumbnail}`}
+              alt="green iguana"
+            />
+          )}
         </CardActionArea>
       </Card>
     </>

@@ -25,7 +25,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const LoginForm = () => {
+const LoginForm = ({ setToken, setUser }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -80,6 +80,8 @@ const LoginForm = () => {
                   "UserToken",
                   JSON.stringify(res.data.token)
                 );
+                setToken(JSON.stringify(res.data.token));
+                setUser(res.data.data);
                 localStorage.setItem("User", JSON.stringify(res.data.data));
                 notify();
                 setTimeout(() => {
@@ -307,7 +309,10 @@ const LoginForm = () => {
                       notify();
                       setTimeout(() => {
                         axios
-                          .post(`${BaseURL}/users/check_otp_in_user_model`, values)
+                          .post(
+                            `${BaseURL}/users/check_otp_in_user_model`,
+                            values
+                          )
                           .then((res) => {
                             if (
                               res &&
@@ -320,7 +325,7 @@ const LoginForm = () => {
                               notify();
                               handleOpenChangePassModel();
                             } else {
-                              const notify = () =>toast.error("Oooppsss..!!!");
+                              const notify = () => toast.error("Oooppsss..!!!");
                               notify();
                             }
                             handleClose();
@@ -388,104 +393,123 @@ const LoginForm = () => {
               </Box>
             </Modal>
 
-             {/* =========== CHANGE PASSWORD MODAL ============== */}
-             <Modal
-                open={openChangePassModel}
-                onClose={handleCloseChangePassModel}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Reset Your Password :
-                  </Typography>
-                  <Formik
-                    initialValues={{ password: '', confPassword: '' }}
-                    validate={(values) => {
-                      const errors = {};
-                      if (!values.password) {
-                        errors.password = '**Password required';
-                      } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[A-Za-z\d\W]{8,}$/i.test(values.password)) {
-                        errors.password =
-                          'minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1 ';
-                      }
-                      if (!values.confPassword) {
-                        errors.confPassword = '**Confirm Password required';
-                      } else if (values.confPassword !== values.password) {
-                        errors.confPassword = '**Password did not matched..!!';
-                      }
-                      return errors;
-                    }}
-                    onSubmit={(values, { setSubmitting }) => {
-                      const notify = () => toast('Please wait for a while...');
-                      notify();
-                      setTimeout(() => {
-                        axios
-                          .put(`${BaseURL}/users/update_user/${userId}`, values)
-                          .then((res) => {
-                            if (res && res.data && res.data.message !== undefined) {
-                              const notify = () => toast.success(res.data.message);
-                              notify();
-                              handleCloseChangePassModel();
-                            }
-                          })
-                          .catch((error) => {
-                            if (error.response) {
-                              const notify = () =>
-                                toast.error(error.response.data.message, {
-                                  position: 'top-center',
-                                });
-                              notify();
-                              handleCloseChangePassModel();
-                            }
-                          });
-                        setSubmitting(false);
-                      }, 400);
-                    }}
-                  >
-                    {({
-                      values,
-                      errors,
-                      touched,
-                      handleChange,
-                      handleBlur,
-                      handleSubmit,
-                      isSubmitting,
-                      /* and other goodies */
-                    }) => (
-                      <form onSubmit={handleSubmit}>
-                        <Stack spacing={2}>
-                          <TextField
-                            type="password"
-                            label="New Password"
-                            name="password"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password}
-                          />
-                          <span className="text-danger">{errors.password && touched.password && errors.password}</span>
+            {/* =========== CHANGE PASSWORD MODAL ============== */}
+            <Modal
+              open={openChangePassModel}
+              onClose={handleCloseChangePassModel}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Reset Your Password :
+                </Typography>
+                <Formik
+                  initialValues={{ password: "", confPassword: "" }}
+                  validate={(values) => {
+                    const errors = {};
+                    if (!values.password) {
+                      errors.password = "**Password required";
+                    } else if (
+                      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[A-Za-z\d\W]{8,}$/i.test(
+                        values.password
+                      )
+                    ) {
+                      errors.password =
+                        "minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1 ";
+                    }
+                    if (!values.confPassword) {
+                      errors.confPassword = "**Confirm Password required";
+                    } else if (values.confPassword !== values.password) {
+                      errors.confPassword = "**Password did not matched..!!";
+                    }
+                    return errors;
+                  }}
+                  onSubmit={(values, { setSubmitting }) => {
+                    const notify = () => toast("Please wait for a while...");
+                    notify();
+                    setTimeout(() => {
+                      axios
+                        .put(`${BaseURL}/users/update_user/${userId}`, values)
+                        .then((res) => {
+                          if (
+                            res &&
+                            res.data &&
+                            res.data.message !== undefined
+                          ) {
+                            const notify = () =>
+                              toast.success(res.data.message);
+                            notify();
+                            handleCloseChangePassModel();
+                          }
+                        })
+                        .catch((error) => {
+                          if (error.response) {
+                            const notify = () =>
+                              toast.error(error.response.data.message, {
+                                position: "top-center",
+                              });
+                            notify();
+                            handleCloseChangePassModel();
+                          }
+                        });
+                      setSubmitting(false);
+                    }, 400);
+                  }}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                    /* and other goodies */
+                  }) => (
+                    <form onSubmit={handleSubmit}>
+                      <Stack spacing={2}>
+                        <TextField
+                          type="password"
+                          label="New Password"
+                          name="password"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.password}
+                        />
+                        <span className="text-danger">
+                          {errors.password &&
+                            touched.password &&
+                            errors.password}
+                        </span>
 
-                          <TextField
-                            type="password"
-                            label="Confirm Password"
-                            name="confPassword"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.confPassword}
-                          />
-                          <span className="text-danger">
-                            {errors.confPassword && touched.confPassword && errors.confPassword}
-                          </span>
+                        <TextField
+                          type="password"
+                          label="Confirm Password"
+                          name="confPassword"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.confPassword}
+                        />
+                        <span className="text-danger">
+                          {errors.confPassword &&
+                            touched.confPassword &&
+                            errors.confPassword}
+                        </span>
 
-                          <Button type="submit" variant="contained" disabled={isSubmitting}>
-                            Submit
-                          </Button>
-                        </Stack>
-                      </form>
-                    )}
-                  </Formik>
-                </Box>
-              </Modal>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          disabled={isSubmitting}
+                        >
+                          Submit
+                        </Button>
+                      </Stack>
+                    </form>
+                  )}
+                </Formik>
+              </Box>
+            </Modal>
           </form>
         )}
       </Formik>

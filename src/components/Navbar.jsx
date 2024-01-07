@@ -14,11 +14,8 @@ import { deepPurple } from "@mui/material/colors";
 
 const navigation = [
   { name: "Movies", to: "/movies", current: false },
-  { name: "TV Show", to: "tvShows", current: false },
-  { name: "Blog", to: "blogs", current: false },
-];
-const userNavigation = [
-  { name: "My Profile", to: "/myProfile", current: false },
+  { name: "TV Show", to: "/tvShows", current: false },
+  { name: "Blog", to: "/blogs", current: false },
 ];
 
 function classNames(...classes) {
@@ -67,7 +64,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar = ({ setToken, setUser }) => {
   const user = JSON.parse(localStorage.getItem("User"));
   const navigate = useNavigate();
   const searchAnyThing = (e) => {
@@ -81,16 +78,18 @@ const Navbar = () => {
   const signOutFunc = () => {
     const token = localStorage.getItem("UserToken");
     if (token) {
+      setToken(null);
+      setUser(null);
       localStorage.removeItem("UserToken");
       localStorage.removeItem("User");
-      const notify = () =>
-        toast.success("Logout Successfully...!!", {
-          theme: "dark",
-        });
-      notify();
       setTimeout(() => {
+        const notify = () =>
+          toast.success("Logout Successfully...!!", {
+            theme: "dark",
+          });
+        notify();
         navigate("/login");
-      }, 3000);
+      }, 2000);
     }
   };
   return (
@@ -100,7 +99,7 @@ const Navbar = () => {
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
+                {/* desktop menu button*/}
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
@@ -121,7 +120,7 @@ const Navbar = () => {
                     />
                   </a>
                 </div>
-                <div className="hidden sm:flex sm:items-center sm:ml-6 sm:block">
+                <div className="hidden sm:flex sm:items-center sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation &&
                       navigation.map((item) => (
@@ -185,23 +184,20 @@ const Navbar = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {userNavigation &&
-                        userNavigation.map((item) => (
-                          <Menu.Item>
-                            {({ active }) => (
-                              <NavLink
-                                to={item.to}
-                                className={classNames(
-                                  "decorationNone",
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700 decorationNone"
-                                )}
-                              >
-                                {item.name}
-                              </NavLink>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <NavLink
+                            to="/myProfile"
+                            className={classNames(
+                              "decorationNone",
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700 decorationNone"
                             )}
-                          </Menu.Item>
-                        ))}
+                          >
+                            My Profile
+                          </NavLink>
+                        )}
+                      </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
                           <NavLink
@@ -226,20 +222,21 @@ const Navbar = () => {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item) => (
-                <Disclosure.Button
+                <NavLink
                   key={item.name}
                   as="a"
-                  href={item.href}
+                  // href={item.href}
+                  to={item.to}
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
+                    "block rounded-md px-3 py-2 text-base font-medium no-underline"
                   )}
                   aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
-                </Disclosure.Button>
+                </NavLink>
               ))}
             </div>
           </Disclosure.Panel>
