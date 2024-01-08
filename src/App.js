@@ -26,6 +26,7 @@ import MyProfile from "./pages/MyProfile";
 import BlogDetail from "./components/Blog/BlogDetail";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
+import ErrorPage from "./pages/ErrorPage";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -103,6 +104,7 @@ function App() {
             element={token ? <SeasonsFrame /> : <Navigate to="/login" />}
           />
           <Route path="/blogs/blogDetails/:blog_id" element={<BlogDetail />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />
       </Router>
