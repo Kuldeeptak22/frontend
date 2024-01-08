@@ -55,19 +55,7 @@ const TvShowDetail = ({ data }) => {
           <div className="pr-2">{data?.category?.name}</div>
           <div className="text-slate-400">|</div>
           <div className="px-2">
-            {data?.category?.name === "Mythology"
-              ? "Spirituality"
-              : data?.category?.name === "Romantic"
-              ? "Drama"
-              : data?.category?.name === "Animation"
-              ? "Action"
-              : data?.category?.name === "Drama"
-              ? "Entertainment"
-              : data?.category?.name === "Horror"
-              ? "Thriller"
-              : data?.category?.name === "Sci-fi"
-              ? "Thriller"
-              : ""}
+            {data?.category?.name === "Mythology" ? "Spirituality" : data?.category?.name === "StarPlus Show"? "Family Show":"Entertainment"}
           </div>
         </div>
         <div className="py-3 d-flex flex-col sm:flex-row">

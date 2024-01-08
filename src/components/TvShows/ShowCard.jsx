@@ -38,7 +38,7 @@ const ShowCard = ({ elem }) => {
             />
           ) : (
             <CardMedia
-              style={{ maxHeight: 400 }}
+              style={{ maxHeight: 300 }}
               component="img"
               height="100%"
               width="100px"

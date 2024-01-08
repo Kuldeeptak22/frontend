@@ -12,13 +12,13 @@ const SliderHeadingShow = ({ SliderHeadingData }) => {
 
   return (
     <div className="flex justify-content-between pt-4 align-middle items-center">
-      <p className="pl-20 fs-4 text-white">
+      <p className="sm:pl-20 pl-4 fs-4 text-white">
         {SliderHeadingData === "More Like This"
           ? SliderHeadingData
           : `${SliderHeadingData} Show`}
       </p>
       <p
-        className="pr-20 fs-5 cursor-pointer"
+        className="sm:pr-20 pr-4 fs-5 cursor-pointer"
         onClick={() => goTOViewAll(SliderHeadingData)}
       >
         <Button className=" text-white">
