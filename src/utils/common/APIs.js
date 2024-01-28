@@ -1,1 +1,1 @@
-export const BaseURL = "http://localhost:7100";
+export const BaseURL = "https://moviegrambackend.onrender.com";
